@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "grailsort/version"
-
 module Grailsort
   ###############
   # ENTRYPOINTS #
@@ -11,10 +9,11 @@ module Grailsort
     common_sort!(arr, &cmp)
   end
 
+  # TODO: Find better implementation for sort_by, because this is blatantly O(n) space
   def self.grailsort_by!(arr, &by)
     hash = arr.zip(arr.map(&by))
     common_sort!(hash) { |a,b| a[1] <=> b[1] }
-    hash.map { |e, _| e }
+    (0...arr.count).map { |i| arr[i] = hash[i][0] }
   end
 
   #############
